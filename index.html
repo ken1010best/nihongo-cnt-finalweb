@@ -758,9 +758,31 @@ function openModal(plan='') {
 function closeModal(){document.getElementById('mOv').classList.remove('on')}
 function closeIfOut(e){if(e.target===document.getElementById('mOv'))closeModal()}
 function submitForm(){
-  if(!document.getElementById('iName').value.trim()||!document.getElementById('iPhone').value.trim()){
-    alert('Vui lòng điền họ tên và số Zalo!');return;
+  const name = document.getElementById('iName').value.trim();
+  const phone = document.getElementById('iPhone').value.trim();
+
+  if(!name || !phone){
+    alert('Vui lòng điền họ tên và số Zalo!');
+    return;
   }
+
+  const data = {
+    name: name,
+    phone: phone,
+    plan: document.getElementById('iPlan').value,
+    level: document.getElementById('iLevel').value,
+    duration: document.getElementById('iDur').value
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbyT1rF7rKIBkx991sHpfSmlwXVRl5cIFJ64X9855bNrRMvQpktANcch3ER9sLAp0_Pcxg/exec', {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  });
+
   document.getElementById('mForm').style.display='none';
   document.getElementById('mOk').style.display='block';
 }
