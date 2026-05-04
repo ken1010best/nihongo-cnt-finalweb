@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nihongo Connect — Học tiếng Nhật linh hoạt</title>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Be+Vietnam+Pro:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0B0B0B;--bg2:#111;--bg3:#161616;--bg4:#1E1E1E;
+  --text:#F2F2F2;--t2:#888;--t3:#444;--t4:#252525;
+  --red:#FF5A3D;--org:#FB923C;--yel:#FFC857;
+  --grn:#4ADE80;--blu:#60A5FA;--pur:#C084FC;--pnk:#F472B6;
+  --br:#1E1E1E;--br2:#252525;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Be Vietnam Pro',sans-serif;line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+img{display:block}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--br2);border-radius:2px}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(11,11,11,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--br)}
+.nav-wrap{max-width:1140px;margin:0 auto;padding:0 24px;height:60px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-family:'Anton',sans-serif;font-size:20px;letter-spacing:2px}
+.logo b{color:var(--red)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--t2);transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{background:var(--red);color:#fff;padding:8px 20px;border-radius:3px;font-size:12px;font-weight:700;letter-spacing:1px;transition:opacity .2s}
+.nav-cta:hover{opacity:.8}
+
+/* ── HERO ── */
+.hero{padding:120px 24px 80px;position:relative;overflow:hidden}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 600px 400px at 80% 40%,rgba(255,90,61,.06) 0%,transparent 70%);pointer-events:none}
+.hero-wrap{max-width:1140px;margin:0 auto;display:grid;grid-template-columns:1fr 480px;gap:80px;align-items:center}
+.hero-eyebrow{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--red);margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.hero-eyebrow::before{content:'';width:28px;height:1px;background:var(--red)}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(48px,5.5vw,80px);line-height:1.0;letter-spacing:-1px;margin-bottom:22px}
+.hero h1 mark{background:none;color:var(--red)}
+.hero-lead{font-size:15px;color:var(--t2);max-width:460px;margin-bottom:36px;line-height:1.9}
+.hero-lead strong{color:var(--text);font-weight:600}
+.hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-bottom:48px}
+.btn-r{background:var(--red);color:#fff;padding:13px 26px;border-radius:3px;font-size:13px;font-weight:700;letter-spacing:.5px;transition:opacity .2s}
+.btn-r:hover{opacity:.8}
+.btn-ghost{border:1px solid var(--br2);color:var(--t2);padding:13px 26px;border-radius:3px;font-size:13px;transition:all .2s}
+.btn-ghost:hover{color:var(--text);border-color:var(--t3)}
+.hero-stat-row{display:flex;gap:36px;padding-top:36px;border-top:1px solid var(--br)}
+.hstat-n{font-family:'Anton',sans-serif;font-size:34px;line-height:1}
+.hstat-l{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t2);margin-top:4px}
+
+/* ── HERO BLOCK PICKER ── */
+.block-picker{background:var(--bg2);border:1px solid var(--br);border-radius:10px;overflow:hidden}
+.bp-header{padding:18px 22px;border-bottom:1px solid var(--br);display:flex;align-items:center;justify-content:space-between}
+.bp-title{font-family:'Anton',sans-serif;font-size:16px;letter-spacing:.5px}
+.bp-sub{font-size:11px;color:var(--t2);margin-top:2px}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--grn);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+.bp-tabs{display:flex;border-bottom:1px solid var(--br)}
+.bp-tab{flex:1;padding:14px 0;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;text-align:center;cursor:pointer;color:var(--t2);border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;font-family:'Be Vietnam Pro',sans-serif}
+.bp-tab.active{color:var(--text);border-bottom-color:var(--red)}
+.bp-body{padding:18px 22px}
+
+.duration-row{display:flex;gap:8px;margin-bottom:18px}
+.dur-btn{flex:1;padding:10px 0;border-radius:4px;border:1px solid var(--br2);background:none;color:var(--t2);font-size:12px;font-weight:600;letter-spacing:.5px;cursor:pointer;transition:all .2s;font-family:'Be Vietnam Pro',sans-serif;display:flex;flex-direction:column;align-items:center;gap:3px}
+.dur-btn span.dur-label{font-size:9px;text-transform:uppercase;letter-spacing:1px;opacity:.6}
+.dur-btn.active{background:rgba(255,90,61,.1);border-color:var(--red);color:var(--red)}
+.dur-btn:hover:not(.active){border-color:var(--t3);color:var(--text)}
+
+.lesson-card{background:var(--bg3);border:1px solid var(--br);border-radius:6px;padding:14px 16px;margin-bottom:8px;display:flex;align-items:center;gap:12px;cursor:pointer;transition:border-color .2s}
+.lesson-card:hover{border-color:var(--br2)}
+.lesson-card:last-child{margin-bottom:0}
+.lc-icon{width:36px;height:36px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.lc-info{flex:1;min-width:0}
+.lc-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lc-meta{font-size:11px;color:var(--t2);margin-top:2px}
+.lc-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px;flex-shrink:0}
+.lc-time{font-family:'Anton',sans-serif;font-size:14px}
+.lc-badge{font-size:9px;padding:2px 7px;border-radius:20px;font-weight:600;letter-spacing:.5px}
+
+.bp-footer{padding:14px 22px;border-top:1px solid var(--br);display:flex;justify-content:space-between;align-items:center}
+.bp-total{font-size:12px;color:var(--t2)}
+.bp-total b{color:var(--text);font-size:14px}
+.bp-cta{background:var(--red);color:#fff;padding:9px 18px;border-radius:3px;font-size:12px;font-weight:700;letter-spacing:.5px;border:none;cursor:pointer;font-family:'Be Vietnam Pro',sans-serif;transition:opacity .2s}
+.bp-cta:hover{opacity:.8}
+
+/* ── SECTION COMMON ── */
+.sec{padding:96px 24px}
+.sec-wrap{max-width:1140px;margin:0 auto}
+.sec-eye{font-size:10px;letter-spacing:4px;text-transform:uppercase;margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.sec-eye::before{content:'';width:28px;height:1px;background:currentColor}
+.sec-h{font-family:'Anton',sans-serif;font-size:clamp(32px,4vw,52px);line-height:1.05;margin-bottom:14px}
+.sec-p{font-size:14px;color:var(--t2);max-width:520px;line-height:1.9}
+
+/* ── HOW IT WORKS ── */
+.hiw-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--br);border:1px solid var(--br);border-radius:10px;overflow:hidden;margin-top:56px}
+.hiw-card{background:var(--bg2);padding:36px 30px;position:relative;overflow:hidden}
+.hiw-num{position:absolute;bottom:-16px;right:8px;font-family:'Anton',sans-serif;font-size:120px;color:var(--bg3);line-height:1;user-select:none}
+.hiw-icon{font-size:24px;margin-bottom:20px}
+.hiw-h{font-family:'Anton',sans-serif;font-size:18px;margin-bottom:10px;position:relative}
+.hiw-p{font-size:13px;color:var(--t2);line-height:1.8;position:relative}
+
+/* ── PRICING ── */
+.price-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:56px}
+.pc{background:var(--bg2);border:1px solid var(--br);border-radius:10px;padding:30px;position:relative;overflow:hidden;transition:border-color .3s}
+.pc:hover{border-color:var(--br2)}
+.pc.hot{border-color:var(--org)}
+.pc-badge{position:absolute;top:0;right:24px;background:var(--org);color:#0B0B0B;font-size:9px;letter-spacing:2px;font-weight:700;padding:4px 12px;border-radius:0 0 6px 6px}
+.pc-stripe{height:3px;border-radius:2px;margin-bottom:22px}
+.pc-name{font-family:'Anton',sans-serif;font-size:22px;margin-bottom:4px}
+.pc-desc{font-size:12px;color:var(--t2);margin-bottom:24px;line-height:1.6}
+.pc-price{margin-bottom:8px}
+.pc-n{font-family:'Anton',sans-serif;font-size:44px;line-height:1}
+.pc-u{font-size:12px;color:var(--t2);margin-top:4px}
+.pc-per{font-size:11px;color:var(--t3);margin-bottom:26px;padding-bottom:22px;border-bottom:1px solid var(--br)}
+.pc-list{list-style:none;margin-bottom:26px}
+.pc-list li{font-size:13px;color:var(--t2);padding:8px 0;border-bottom:1px solid var(--br);display:flex;align-items:flex-start;gap:8px;line-height:1.5}
+.pc-list li:last-child{border:none}
+.pc-list li::before{content:'→';color:var(--t3);flex-shrink:0;margin-top:1px}
+.pc-btn{display:block;text-align:center;padding:13px;border-radius:4px;font-size:13px;font-weight:700;letter-spacing:.5px;transition:all .2s;cursor:pointer;border:none;width:100%;font-family:'Be Vietnam Pro',sans-serif}
+.pc-btn-solid{background:var(--org);color:#0B0B0B}
+.pc-btn-solid:hover{opacity:.85}
+.pc-btn-line{background:none;border:1px solid var(--br2);color:var(--text)}
+.pc-btn-line:hover{border-color:var(--t3);background:var(--bg3)}
+
+/* Duration blocks inside pricing */
+.dur-blocks{display:flex;gap:6px;margin:14px 0 20px}
+.db{flex:1;border:1px solid var(--br);border-radius:4px;padding:8px 4px;text-align:center}
+.db-t{font-family:'Anton',sans-serif;font-size:14px}
+.db-l{font-size:9px;color:var(--t3);text-transform:uppercase;letter-spacing:1px;margin-top:2px}
+
+/* ── TEACHERS ── */
+.tchr-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:56px}
+.tchr{background:var(--bg2);border:1px solid var(--br);border-radius:10px;padding:30px;display:flex;gap:20px;transition:border-color .3s}
+.tchr:hover{border-color:var(--br2)}
+.av{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;font-size:22px;flex-shrink:0;border:2px solid}
+.av-vn{background:rgba(74,222,128,.08);color:var(--grn);border-color:rgba(74,222,128,.2)}
+.av-jp{background:rgba(255,199,87,.08);color:var(--yel);border-color:rgba(255,199,87,.2)}
+.tchr-n{font-family:'Anton',sans-serif;font-size:18px;margin-bottom:3px}
+.tchr-lv{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:10px}
+.tchr-d{font-size:13px;color:var(--t2);line-height:1.8;margin-bottom:14px}
+.tags{display:flex;flex-wrap:wrap;gap:5px}
+.tag{font-size:10px;padding:3px 9px;border-radius:20px;font-weight:600;border:1px solid}
+.tg{color:var(--grn);background:rgba(74,222,128,.06);border-color:rgba(74,222,128,.15)}
+.ty{color:var(--yel);background:rgba(255,199,87,.06);border-color:rgba(255,199,87,.15)}
+
+/* ── CURRICULUM PREVIEW ── */
+.curr-sec{background:var(--bg2);border-top:1px solid var(--br);border-bottom:1px solid var(--br)}
+.curr-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start;margin-top:56px}
+.curr-list{display:flex;flex-direction:column;gap:12px}
+.curr-item{background:var(--bg3);border:1px solid var(--br);border-radius:6px;padding:16px 18px;border-left:3px solid;display:flex;align-items:center;gap:14px;cursor:default}
+.ci-icon{font-size:18px;flex-shrink:0}
+.ci-n{font-size:13px;font-weight:600;margin-bottom:3px}
+.ci-m{font-size:11px;color:var(--t2)}
+.ci-dur{display:flex;gap:5px;margin-top:6px}
+.cd{font-size:9px;padding:2px 6px;border-radius:20px;font-weight:600}
+.curr-note{background:var(--bg3);border:1px solid var(--br);border-radius:10px;padding:30px}
+.cn-h{font-family:'Anton',sans-serif;font-size:22px;margin-bottom:10px}
+.cn-p{font-size:13px;color:var(--t2);line-height:1.9;margin-bottom:20px}
+.cn-soon{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--pur);display:flex;align-items:center;gap:8px}
+.cn-soon::before{content:'';width:16px;height:1px;background:var(--pur)}
+.coming-list{display:flex;flex-direction:column;gap:8px;margin-top:14px}
+.cl-item{font-size:12px;color:var(--t3);padding:8px 12px;border:1px dashed var(--br2);border-radius:4px;display:flex;align-items:center;gap:8px}
+.cl-item::before{content:'◌';font-size:10px}
+
+/* ── FAQ ── */
+.faq{margin-top:56px}
+.fq{border-bottom:1px solid var(--br)}
+.fq-q{width:100%;background:none;border:none;color:var(--text);font-family:'Be Vietnam Pro',sans-serif;font-size:14px;font-weight:500;padding:20px 0;text-align:left;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px;letter-spacing:.2px}
+.fq-q:hover{color:var(--t2)}
+.fq-ic{font-size:20px;color:var(--t3);transition:transform .3s;flex-shrink:0;line-height:1}
+.fq.on .fq-ic{transform:rotate(45deg);color:var(--red)}
+.fq-a{max-height:0;overflow:hidden;transition:max-height .35s ease}
+.fq.on .fq-a{max-height:200px}
+.fq-a p{font-size:13px;color:var(--t2);line-height:1.9;padding-bottom:18px}
+
+/* ── CTA ── */
+.cta-sec{padding:120px 24px;text-align:center;position:relative;overflow:hidden}
+.cta-bg-txt{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);font-family:'Anton',sans-serif;font-size:clamp(80px,15vw,200px);color:rgba(255,255,255,.012);white-space:nowrap;letter-spacing:-4px;pointer-events:none;user-select:none}
+.cta-eye{font-size:10px;letter-spacing:4px;text-transform:uppercase;color:var(--blu);display:flex;align-items:center;justify-content:center;gap:10px;margin-bottom:16px}
+.cta-eye::before{content:'';width:28px;height:1px;background:var(--blu)}
+.cta-h{font-family:'Anton',sans-serif;font-size:clamp(40px,6vw,72px);line-height:1.0;margin-bottom:14px}
+.cta-p{font-size:14px;color:var(--t2);margin-bottom:36px}
+.cta-actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap}
+.cta-foot{margin-top:28px;font-size:11px;color:var(--t4);letter-spacing:2px}
+
+/* ── NEON ── */
+.neon{height:1px;background:linear-gradient(90deg,transparent 0%,rgba(255,90,61,.4) 50%,transparent 100%)}
+
+/* ── FOOTER ── */
+footer{padding:36px 24px;border-top:1px solid var(--br)}
+.ft{max-width:1140px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px}
+.ft-logo{font-family:'Anton',sans-serif;font-size:16px;letter-spacing:2px}
+.ft-logo b{color:var(--red)}
+.ft-links{display:flex;gap:20px;list-style:none}
+.ft-links a{font-size:11px;letter-spacing:1px;color:var(--t3);text-transform:uppercase}
+.ft-links a:hover{color:var(--t2)}
+.ft-copy{font-size:11px;color:var(--t4);letter-spacing:1px}
+
+/* ── MODAL ── */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:300;align-items:center;justify-content:center;padding:20px}
+.modal-ov.on{display:flex}
+.modal{background:var(--bg2);border:1px solid var(--br);border-radius:12px;padding:40px;max-width:460px;width:100%;position:relative;max-height:90vh;overflow-y:auto}
+.modal-x{position:absolute;top:14px;right:18px;background:none;border:none;color:var(--t3);font-size:26px;cursor:pointer;line-height:1;font-family:sans-serif}
+.modal-x:hover{color:var(--text)}
+.modal h3{font-family:'Anton',sans-serif;font-size:26px;margin-bottom:4px}
+.modal-sub{font-size:12px;color:var(--t3);margin-bottom:28px;letter-spacing:.5px}
+.fl{margin-bottom:16px}
+.fl label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--t3);margin-bottom:6px}
+.fl input,.fl select{width:100%;background:var(--bg3);border:1px solid var(--br);color:var(--text);padding:11px 14px;border-radius:5px;font-size:14px;font-family:'Be Vietnam Pro',sans-serif;transition:border-color .2s}
+.fl input:focus,.fl select:focus{outline:none;border-color:var(--t3)}
+.fl select option{background:var(--bg2)}
+.modal-submit{width:100%;background:var(--red);color:#fff;border:none;padding:14px;border-radius:5px;font-size:13px;font-weight:700;letter-spacing:1px;cursor:pointer;margin-top:6px;font-family:'Be Vietnam Pro',sans-serif;transition:opacity .2s}
+.modal-submit:hover{opacity:.85}
+.ok-msg{display:none;text-align:center;padding:16px 0}
+.ok-ic{font-size:44px;margin-bottom:10px}
+.ok-h{font-family:'Anton',sans-serif;font-size:24px;margin-bottom:8px}
+.ok-p{font-size:13px;color:var(--t2);line-height:1.7}
+
+@media(max-width:860px){
+  .hero-wrap,.hiw-grid,.price-grid,.tchr-grid,.curr-grid{grid-template-columns:1fr}
+  .hero-wrap{gap:40px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-wrap">
+    <div class="logo">NIHONGO<b>CONNECT</b></div>
+    <ul class="nav-links">
+      <li><a href="#how">Cách học</a></li>
+      <li><a href="#pricing">Gói học</a></li>
+      <li><a href="#teachers">Giáo viên</a></li>
+      <li><a href="#curriculum">Giáo trình</a></li>
+    </ul>
+    <a href="#" class="nav-cta" onclick="openModal();return false">Bắt đầu →</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-wrap">
+    <div>
+      <div class="hero-eyebrow">Nihongoconnect.org</div>
+      <h1>Tiếng Nhật<br><mark>5 phút</mark><br>cũng đủ</h1>
+      <p class="hero-lead">Học theo <strong>block thời gian của bạn</strong> — 5', 15' hay 25'. Chọn bài từ giáo trình, học với giáo viên 1:1, không cần đặt lịch cứng nhắc.</p>
+      <div class="hero-actions">
+        <a href="#pricing" class="btn-r">Xem gói học →</a>
+        <a href="#how" class="btn-ghost">Cách hoạt động</a>
+      </div>
+      <div class="hero-stat-row">
+        <div>
+          <div class="hstat-n" style="color:var(--red)">5'</div>
+          <div class="hstat-l">Tối thiểu</div>
+        </div>
+        <div>
+          <div class="hstat-n" style="color:var(--org)">15'</div>
+          <div class="hstat-l">Tiêu chuẩn</div>
+        </div>
+        <div>
+          <div class="hstat-n" style="color:var(--yel)">25'</div>
+          <div class="hstat-l">Chuyên sâu</div>
+        </div>
+        <div>
+          <div class="hstat-n" style="color:var(--grn)">1:1</div>
+          <div class="hstat-l">Học riêng</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BLOCK PICKER -->
+    <div class="block-picker">
+      <div class="bp-header">
+        <div>
+          <div class="bp-title">Chọn bài học ngay</div>
+          <div class="bp-sub">Chọn thời lượng → chọn bài → học</div>
+        </div>
+        <div class="live-dot" title="Giáo viên đang online"></div>
+      </div>
+      <div class="bp-tabs">
+        <button class="bp-tab active" onclick="switchTab(this,'vn')">GV Việt N1</button>
+        <button class="bp-tab" onclick="switchTab(this,'jp')">GV Người Nhật</button>
+      </div>
+      <div class="bp-body">
+        <div class="duration-row">
+          <button class="dur-btn active" onclick="switchDur(this,5)">
+            5<span class="dur-label">phút</span>
+          </button>
+          <button class="dur-btn" onclick="switchDur(this,15)">
+            15<span class="dur-label">phút</span>
+          </button>
+          <button class="dur-btn" onclick="switchDur(this,25)">
+            25<span class="dur-label">phút</span>
+          </button>
+        </div>
+        <div id="lessonList"></div>
+      </div>
+      <div class="bp-footer">
+        <div class="bp-total">Giáo viên online: <b id="onlineCount">2</b></div>
+        <button class="bp-cta" onclick="openModal()">Đăng ký học →</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="sec" style="background:var(--bg2);border-top:1px solid var(--br);border-bottom:1px solid var(--br)">
+  <div class="sec-wrap">
+    <div class="sec-eye" style="color:var(--org)">Cách hoạt động</div>
+    <h2 class="sec-h">Học khi bạn có<br>5 phút rảnh</h2>
+    <p class="sec-p">Không cần đặt lịch trước. Không cần cam kết 30' hay 60'. Học theo nhịp sống thực của bạn.</p>
+    <div class="hiw-grid">
+      <div class="hiw-card">
+        <div class="hiw-icon">⏱</div>
+        <div class="hiw-h">Chọn thời lượng</div>
+        <p class="hiw-p">Hôm nay có 5 phút giữa hai cuộc họp? Hay 25 phút buổi tối? Tự quyết định.</p>
+        <div class="hiw-num">01</div>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-icon">📖</div>
+        <div class="hiw-h">Chọn bài từ giáo trình</div>
+        <p class="hiw-p">Giáo trình được chúng tôi thiết kế theo cấp độ và chủ đề. Bạn chủ động chọn bài muốn học hôm đó.</p>
+        <div class="hiw-num">02</div>
+      </div>
+      <div class="hiw-card">
+        <div class="hiw-icon">🎌</div>
+        <div class="hiw-h">Học 1:1 với giáo viên</div>
+        <p class="hiw-p">Giáo viên dạy đúng bài bạn chọn, trong đúng thời lượng bạn có. Không lan man, không lãng phí phút nào.</p>
+        <div class="hiw-num">03</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section id="pricing" class="sec">
+  <div class="sec-wrap">
+    <div class="sec-eye" style="color:var(--yel)">Bảng giá</div>
+    <h2 class="sec-h">Gói học linh hoạt<br>không ràng buộc</h2>
+    <p class="sec-p">Thanh toán theo tháng. Hủy bất cứ lúc nào. Mỗi gói được dùng cho cả 3 độ dài bài học.</p>
+
+    <div class="price-grid">
+      <!-- Starter -->
+      <div class="pc">
+        <div class="pc-stripe" style="background:var(--grn)"></div>
+        <div class="pc-name">Starter</div>
+        <div class="pc-desc">Dành cho người mới bắt đầu hoặc lịch bận. Học đủ mỗi ngày với các block ngắn.</div>
+        <div class="dur-blocks">
+          <div class="db"><div class="db-t" style="color:var(--grn)">5'</div><div class="db-l">Flash</div></div>
+          <div class="db"><div class="db-t" style="color:var(--grn)">15'</div><div class="db-l">Core</div></div>
+          <div class="db"><div class="db-t" style="color:var(--t3)">—</div><div class="db-l">—</div></div>
+        </div>
+        <div class="pc-price"><div class="pc-n" style="color:var(--grn)">900k</div></div>
+        <div class="pc-u">20 buổi / tháng</div>
+        <div class="pc-per">≈ 45.000đ / buổi — GV Việt N1</div>
+        <ul class="pc-list">
+          <li>Block 5' và 15' không giới hạn kết hợp</li>
+          <li>Chọn bài từ giáo trình có sẵn</li>
+          <li>GV Việt N1 giải thích tiếng Việt</li>
+          <li>Nhắc lịch qua Zalo</li>
+        </ul>
+        <button class="pc-btn pc-btn-line" onclick="openModal('Gói Starter')">Đăng ký Starter</button>
+      </div>
+
+      <!-- Standard — HOT -->
+      <div class="pc hot">
+        <div class="pc-badge">PHỔ BIẾN</div>
+        <div class="pc-stripe" style="background:var(--org)"></div>
+        <div class="pc-name">Standard</div>
+        <div class="pc-desc">Cân bằng tốt nhất. Đủ thời gian học sâu mà vẫn linh hoạt với lịch sinh hoạt.</div>
+        <div class="dur-blocks">
+          <div class="db"><div class="db-t" style="color:var(--org)">5'</div><div class="db-l">Flash</div></div>
+          <div class="db"><div class="db-t" style="color:var(--org)">15'</div><div class="db-l">Core</div></div>
+          <div class="db"><div class="db-t" style="color:var(--org)">25'</div><div class="db-l">Deep</div></div>
+        </div>
+        <div class="pc-price"><div class="pc-n" style="color:var(--org)">1.5tr</div></div>
+        <div class="pc-u">22 buổi / tháng</div>
+        <div class="pc-per">≈ 68.000đ / buổi — GV Việt N1</div>
+        <ul class="pc-list">
+          <li>Cả 3 block: 5', 15', 25' tùy ngày</li>
+          <li>Chọn bài từ giáo trình đầy đủ</li>
+          <li>GV Việt N1 giải thích sâu</li>
+          <li>Ghi chú học tập sau mỗi buổi</li>
+          <li>Ưu tiên chọn giờ đẹp</li>
+        </ul>
+        <button class="pc-btn pc-btn-solid" onclick="openModal('Gói Standard')">Đăng ký Standard</button>
+      </div>
+
+      <!-- Pro Nhật -->
+      <div class="pc">
+        <div class="pc-stripe" style="background:var(--yel)"></div>
+        <div class="pc-name">Pro — GV Nhật</div>
+        <div class="pc-desc">Học với giáo viên bản ngữ Nhật Bản. Phát âm chuẩn, phản xạ tự nhiên.</div>
+        <div class="dur-blocks">
+          <div class="db"><div class="db-t" style="color:var(--yel)">5'</div><div class="db-l">Flash</div></div>
+          <div class="db"><div class="db-t" style="color:var(--yel)">15'</div><div class="db-l">Core</div></div>
+          <div class="db"><div class="db-t" style="color:var(--yel)">25'</div><div class="db-l">Deep</div></div>
+        </div>
+        <div class="pc-price"><div class="pc-n" style="color:var(--yel)">2.2tr</div></div>
+        <div class="pc-u">22 buổi / tháng</div>
+        <div class="pc-per">≈ 100.000đ / buổi — GV Người Nhật</div>
+        <ul class="pc-list">
+          <li>Cả 3 block: 5', 15', 25' tùy ngày</li>
+          <li>Phát âm 100% bản ngữ Nhật</li>
+          <li>Giáo trình hội thoại thực tế</li>
+          <li>Keigo & văn hóa công sở Nhật</li>
+          <li>Ghi chú học tập sau mỗi buổi</li>
+        </ul>
+        <button class="pc-btn pc-btn-line" onclick="openModal('Gói Pro GV Nhật')">Đăng ký Pro</button>
+      </div>
+    </div>
+
+    <!-- Combo note -->
+    <div style="margin-top:20px;background:var(--bg2);border:1px solid var(--br);border-radius:8px;padding:22px 26px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px">
+      <div>
+        <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--pnk);margin-bottom:6px">★ Combo Kết Nối</div>
+        <div style="font-family:'Anton',sans-serif;font-size:18px">GV Việt N1 + GV Người Nhật — <span style="color:var(--pnk)">1.8tr / tháng</span></div>
+        <div style="font-size:12px;color:var(--t2);margin-top:4px">3 buổi/tuần GV Việt · 2 buổi/tuần GV Nhật · Cả 3 độ dài bài học</div>
+      </div>
+      <button class="pc-btn pc-btn-solid" style="background:var(--pnk);white-space:nowrap;padding:13px 24px;width:auto" onclick="openModal('Gói Combo Kết Nối')">Đăng ký Combo →</button>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHERS -->
+<section id="teachers" class="sec" style="background:var(--bg2);border-top:1px solid var(--br);border-bottom:1px solid var(--br)">
+  <div class="sec-wrap">
+    <div class="sec-eye" style="color:var(--grn)">Giáo viên</div>
+    <h2 class="sec-h">Người dạy bạn</h2>
+    <p class="sec-p">Mỗi giáo viên dạy đúng bài bạn chọn — không có script cứng nhắc, không có giáo án chung chung.</p>
+    <div class="tchr-grid">
+      <div class="tchr">
+        <div class="av av-vn">N1</div>
+        <div>
+          <div class="tchr-n">Giáo viên Việt Nam</div>
+          <div class="tchr-lv">Chứng chỉ JLPT N1</div>
+          <div class="tchr-d">Hiểu rõ những lỗi người Việt hay mắc. Giải thích ngữ pháp bằng tiếng Việt — giúp bạn học nhanh hơn. Đặc biệt hiệu quả với các block 15' và 25' ngữ pháp sâu.</div>
+          <div class="tags">
+            <span class="tag tg">JLPT N5–N1</span>
+            <span class="tag tg">Ngữ pháp sâu</span>
+            <span class="tag tg">Mẹo thi</span>
+            <span class="tag tg">Block 5'–25'</span>
+          </div>
+        </div>
+      </div>
+      <div class="tchr">
+        <div class="av av-jp">日</div>
+        <div>
+          <div class="tchr-n">Giáo viên Nhật Bản</div>
+          <div class="tchr-lv">Bản ngữ — Native Speaker</div>
+          <div class="tchr-d">Phát âm chuẩn 100%, dạy cách người Nhật thực sự nói — không phải sách giáo khoa. Block 5' luyện phát âm nhanh, block 25' luyện hội thoại thực chiến.</div>
+          <div class="tags">
+            <span class="tag ty">Bản ngữ</span>
+            <span class="tag ty">Phát âm chuẩn</span>
+            <span class="tag ty">Keigo</span>
+            <span class="tag ty">Block 5'–25'</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM PREVIEW -->
+<section id="curriculum" class="sec curr-sec">
+  <div class="sec-wrap">
+    <div class="sec-eye" style="color:var(--pur)">Giáo trình</div>
+    <h2 class="sec-h">Bài học do chúng tôi<br>thiết kế — bạn chọn</h2>
+    <p class="sec-p">Giáo trình đang được xây dựng theo từng chủ đề và cấp độ. Học viên tự chọn bài muốn học trong buổi hôm đó.</p>
+
+    <div class="curr-grid">
+      <div class="curr-list">
+        <div class="curr-item" style="border-left-color:var(--red)">
+          <div class="ci-icon">🔤</div>
+          <div>
+            <div class="ci-n">Hiragana & Katakana Flash</div>
+            <div class="ci-m">Nhận diện bảng chữ cái tốc độ cao</div>
+            <div class="ci-dur">
+              <span class="cd" style="background:rgba(255,90,61,.1);color:var(--red)">5'</span>
+            </div>
+          </div>
+        </div>
+        <div class="curr-item" style="border-left-color:var(--org)">
+          <div class="ci-icon">💬</div>
+          <div>
+            <div class="ci-n">Hội thoại hàng ngày N5</div>
+            <div class="ci-m">Chào hỏi, mua sắm, hỏi đường</div>
+            <div class="ci-dur">
+              <span class="cd" style="background:rgba(251,146,60,.1);color:var(--org)">5'</span>
+              <span class="cd" style="background:rgba(251,146,60,.1);color:var(--org)">15'</span>
+            </div>
+          </div>
+        </div>
+        <div class="curr-item" style="border-left-color:var(--yel)">
+          <div class="ci-icon">📝</div>
+          <div>
+            <div class="ci-n">Ngữ pháp N4 — て形 & ている</div>
+            <div class="ci-m">Cấu trúc động từ dạng て</div>
+            <div class="ci-dur">
+              <span class="cd" style="background:rgba(255,200,87,.1);color:var(--yel)">15'</span>
+              <span class="cd" style="background:rgba(255,200,87,.1);color:var(--yel)">25'</span>
+            </div>
+          </div>
+        </div>
+        <div class="curr-item" style="border-left-color:var(--grn)">
+          <div class="ci-icon">👂</div>
+          <div>
+            <div class="ci-n">Luyện nghe Shadowing N3</div>
+            <div class="ci-m">Bắt chước ngữ điệu người bản ngữ</div>
+            <div class="ci-dur">
+              <span class="cd" style="background:rgba(74,222,128,.1);color:var(--grn)">15'</span>
+              <span class="cd" style="background:rgba(74,222,128,.1);color:var(--grn)">25'</span>
+            </div>
+          </div>
+        </div>
+        <div class="curr-item" style="border-left-color:var(--blu)">
+          <div class="ci-icon">💼</div>
+          <div>
+            <div class="ci-n">Keigo trong công sở N2</div>
+            <div class="ci-m">Kính ngữ thực tế — email, họp, báo cáo</div>
+            <div class="ci-dur">
+              <span class="cd" style="background:rgba(96,165,250,.1);color:var(--blu)">25'</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="curr-note">
+        <div style="font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--pur);margin-bottom:10px">Đang xây dựng</div>
+        <div class="cn-h">Giáo trình do chúng tôi soạn — bạn chỉ việc chọn</div>
+        <p class="cn-p">Mỗi bài học được thiết kế cho đúng 1 độ dài (5', 15' hoặc 25'). Không có bài học "chung chung" — mỗi block có mục tiêu rõ ràng, bạn biết mình sẽ học được gì trước khi vào học.</p>
+        <div class="cn-soon">Sắp ra mắt</div>
+        <div class="coming-list">
+          <div class="cl-item">Luyện JLPT N3 — Đọc hiểu 15'</div>
+          <div class="cl-item">Từ vựng theo chủ đề — Flash 5'</div>
+          <div class="cl-item">Hội thoại du lịch Nhật Bản — 15' & 25'</div>
+          <div class="cl-item">Phát âm chuẩn dài âm & âm ghép — 5'</div>
+          <div class="cl-item">Kanji N4 — nhận diện & ghi nhớ — 15'</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="sec" style="background:var(--bg2);border-top:1px solid var(--br)">
+  <div class="sec-wrap">
+    <div class="sec-eye" style="color:var(--yel)">FAQ</div>
+    <h2 class="sec-h">Câu hỏi thường gặp</h2>
+    <div class="faq">
+      <div class="fq">
+        <button class="fq-q" onclick="toggleFq(this)">Block 5 phút học được gì?<span class="fq-ic">+</span></button>
+        <div class="fq-a"><p>Một bài Flash 5' được thiết kế để luyện đúng 1 kỹ năng nhỏ — ví dụ: nhận diện 10 Kanji mới, luyện 1 cấu trúc câu, shadowing 1 đoạn hội thoại ngắn. Kết thúc buổi bạn biết mình vừa học được gì cụ thể.</p></div>
+      </div>
+      <div class="fq">
+        <button class="fq-q" onclick="toggleFq(this)">Tôi có thể học nhiều block trong 1 ngày không?<span class="fq-ic">+</span></button>
+        <div class="fq-a"><p>Có, tùy gói. Gói Standard và Pro không giới hạn số block bạn đặt trong ngày, miễn còn buổi trong tháng và giáo viên có lịch trống.</p></div>
+      </div>
+      <div class="fq">
+        <button class="fq-q" onclick="toggleFq(this)">Giáo trình ai thiết kế?<span class="fq-ic">+</span></button>
+        <div class="fq-a"><p>Nihongo Connect tự thiết kế và liên tục cập nhật giáo trình. Học sinh chọn bài từ danh sách — giáo viên dạy đúng bài đó. Chúng tôi không dùng giáo án chung hay sách giáo khoa nguyên xi.</p></div>
+      </div>
+      <div class="fq">
+        <button class="fq-q" onclick="toggleFq(this)">Học qua nền tảng nào?<span class="fq-ic">+</span></button>
+        <div class="fq-a"><p>Học qua Zoom hoặc Google Meet, tùy giáo viên. Sau khi đăng ký, bạn nhận link phòng học cố định. Chỉ cần điện thoại hoặc máy tính là đủ.</p></div>
+      </div>
+      <div class="fq">
+        <button class="fq-q" onclick="toggleFq(this)">Nếu hôm đó tôi bận, buổi học có bị mất không?<span class="fq-ic">+</span></button>
+        <div class="fq-a"><p>Hủy trước 2 giờ thì buổi học được hoàn lại vào tháng. Không báo trước thì tính là đã dùng. Mỗi tháng được hoàn tối đa 3 buổi.</p></div>
+      </div>
+      <div class="fq">
+        <button class="fq-q" onclick="toggleFq(this)">Người mới hoàn toàn học được không?<span class="fq-ic">+</span></button>
+        <div class="fq-a"><p>Được. Có các bài Flash 5' cho người mới — Hiragana, Katakana, Chào hỏi cơ bản. Buổi đầu tiên là buổi đánh giá cấp độ miễn phí trước khi vào học chính thức.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-sec">
+  <div class="cta-bg-txt">CONNECT</div>
+  <div class="cta-eye">Bắt đầu</div>
+  <h2 class="cta-h">Buổi học thử<br>miễn phí</h2>
+  <p class="cta-p">15 phút trải nghiệm với giáo viên của bạn.<br>Không cần thanh toán trước. Không cam kết.</p>
+  <div class="cta-actions">
+    <a href="#" class="btn-r" style="font-size:14px;padding:15px 34px" onclick="openModal('Học thử miễn phí');return false">Đặt buổi học thử →</a>
+  </div>
+  <div class="cta-foot">@NIHONGOCONNECT · NIHONGOCONNECT.ORG</div>
+</section>
+
+<div class="neon"></div>
+
+<footer>
+  <div class="ft">
+    <div class="ft-logo">NIHONGO<b>CONNECT</b></div>
+    <ul class="ft-links">
+      <li><a href="#">nihongoconnect.org</a></li>
+      <li><a href="#">@Nihongoconnect</a></li>
+      <li><a href="#">Liên hệ</a></li>
+    </ul>
+    <div class="ft-copy">© 2025 NIHONGOCONNECT</div>
+  </div>
+</footer>
+
+<!-- MODAL -->
+<div class="modal-ov" id="mOv" onclick="closeIfOut(event)">
+  <div class="modal">
+    <button class="modal-x" onclick="closeModal()">×</button>
+    <div id="mForm">
+      <h3>Đăng ký học</h3>
+      <div class="modal-sub" id="mSub">Điền thông tin — giáo viên sẽ liên hệ qua Zalo trong 24h.</div>
+      <div class="fl"><label>Họ và tên</label><input type="text" id="iName" placeholder="Nguyễn Văn A"></div>
+      <div class="fl"><label>Số Zalo / Điện thoại</label><input type="tel" id="iPhone" placeholder="09xx xxx xxx"></div>
+      <div class="fl">
+        <label>Gói học muốn đăng ký</label>
+        <select id="iPlan">
+          <option value="">— Chọn gói —</option>
+          <option>Starter — 900k/tháng (GV Việt N1)</option>
+          <option>Standard — 1.5 triệu/tháng (GV Việt N1)</option>
+          <option>Pro — 2.2 triệu/tháng (GV Người Nhật)</option>
+          <option>Combo Kết Nối — 1.8 triệu/tháng</option>
+          <option>Học thử miễn phí (15 phút)</option>
+        </select>
+      </div>
+      <div class="fl">
+        <label>Trình độ hiện tại</label>
+        <select id="iLevel">
+          <option value="">— Chọn trình độ —</option>
+          <option>Chưa biết gì (mới hoàn toàn)</option>
+          <option>Biết Hiragana / Katakana</option>
+          <option>N5 – N4</option>
+          <option>N3 – N2</option>
+          <option>N1 hoặc cao hơn</option>
+        </select>
+      </div>
+      <div class="fl">
+        <label>Block thời gian ưa thích</label>
+        <select id="iDur">
+          <option value="">— Chọn block —</option>
+          <option>5 phút — Flash (nhanh, bất cứ lúc nào)</option>
+          <option>15 phút — Core (cân bằng)</option>
+          <option>25 phút — Deep (học sâu)</option>
+          <option>Linh hoạt, tùy ngày</option>
+        </select>
+      </div>
+      <button class="modal-submit" onclick="submitForm()">XÁC NHẬN ĐĂNG KÝ →</button>
+    </div>
+    <div class="ok-msg" id="mOk">
+      <div class="ok-ic">🎌</div>
+      <div class="ok-h">Đăng ký thành công!</div>
+      <p class="ok-p">Giáo viên sẽ nhắn Zalo cho bạn trong vòng 24 giờ để xác nhận buổi học đầu tiên.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── LESSON DATA ──
+const lessons = {
+  vn: {
+    5:  [
+      {icon:'🔤',name:'Hiragana Flash — hàng あ–か',meta:'Nhận diện 10 ký tự',col:['#FF5A3D','rgba(255,90,61,.1)'],badge:'FLASH',time:'5\''},
+      {icon:'💬',name:'Chào hỏi cơ bản N5',meta:'Xin chào, Cảm ơn, Xin lỗi',col:['#FB923C','rgba(251,146,60,.1)'],badge:'GIAO TIẾP',time:'5\''},
+      {icon:'🔊',name:'Phát âm dài & ngắn',meta:'Phân biệt おばさん / おばあさん',col:['#FFC857','rgba(255,200,87,.1)'],badge:'PHÁT ÂM',time:'5\''},
+    ],
+    15: [
+      {icon:'📝',name:'Ngữ pháp て形 N4',meta:'Cấu trúc + bài tập nhanh',col:['#4ADE80','rgba(74,222,128,.1)'],badge:'NGỮ PHÁP',time:'15\''},
+      {icon:'💬',name:'Hội thoại mua sắm N4',meta:'Hỏi giá, mặc cả, thanh toán',col:['#60A5FA','rgba(96,165,250,.1)'],badge:'HỘI THOẠI',time:'15\''},
+      {icon:'👂',name:'Luyện nghe N3 — đoạn 1',meta:'Nghe + điền từ còn thiếu',col:['#C084FC','rgba(192,132,252,.1)'],badge:'NGHE',time:'15\''},
+    ],
+    25: [
+      {icon:'📖',name:'Luyện đề JLPT N3 — Phần đọc',meta:'Đọc + giải thích ngữ pháp',col:['#4ADE80','rgba(74,222,128,.1)'],badge:'JLPT',time:'25\''},
+      {icon:'📝',name:'Ngữ pháp N2 — ～にもかかわらず',meta:'Giải thích sâu + 5 ví dụ',col:['#FFC857','rgba(255,200,87,.1)'],badge:'NGỮ PHÁP',time:'25\''},
+      {icon:'🗣',name:'Role-play: Phỏng vấn xin việc',meta:'Luyện đáp câu hỏi thực tế',col:['#FB923C','rgba(251,146,60,.1)'],badge:'THỰC CHIẾN',time:'25\''},
+    ],
+  },
+  jp: {
+    5:  [
+      {icon:'🔊',name:'Phát âm chuẩn — hàng さ–た',meta:'Luyện theo GV bản ngữ',col:['#FFC857','rgba(255,200,87,.1)'],badge:'PHÁT ÂM',time:'5\''},
+      {icon:'💬',name:'Chào hỏi như người Nhật',meta:'Không phải sách giáo khoa',col:['#4ADE80','rgba(74,222,128,.1)'],badge:'GIAO TIẾP',time:'5\''},
+      {icon:'🎵',name:'Intonation — câu hỏi vs khẳng định',meta:'Ngữ điệu đúng kiểu Nhật',col:['#F472B6','rgba(244,114,182,.1)'],badge:'INTONATION',time:'5\''},
+    ],
+    15: [
+      {icon:'💼',name:'Keigo cơ bản — ます & です',meta:'Nói lịch sự trong công sở',col:['#FFC857','rgba(255,200,87,.1)'],badge:'KEIGO',time:'15\''},
+      {icon:'🗾',name:'Văn hóa Nhật — buổi họp',meta:'Làm gì khi bắt đầu & kết thúc họp',col:['#60A5FA','rgba(96,165,250,.1)'],badge:'VĂN HÓA',time:'15\''},
+      {icon:'🗣',name:'Hội thoại tự do — chủ đề bạn chọn',meta:'GV phản hồi và sửa ngay',col:['#4ADE80','rgba(74,222,128,.1)'],badge:'TỰ DO',time:'15\''},
+    ],
+    25: [
+      {icon:'💼',name:'Keigo nâng cao — email công việc',meta:'Viết email theo chuẩn Nhật',col:['#FFC857','rgba(255,200,87,.1)'],badge:'KEIGO',time:'25\''},
+      {icon:'🗣',name:'Role-play: Tiếp khách Nhật',meta:'Tình huống thực tế tại văn phòng',col:['#F472B6','rgba(244,114,182,.1)'],badge:'THỰC CHIẾN',time:'25\''},
+      {icon:'🎭',name:'Shadowing nâng cao N2',meta:'Bắt chước đoạn hội thoại tốc độ thật',col:['#FB923C','rgba(251,146,60,.1)'],badge:'SHADOW',time:'25\''},
+    ],
+  }
+};
+
+let curTab = 'vn', curDur = 5;
+
+function renderLessons() {
+  const list = document.getElementById('lessonList');
+  const data = lessons[curTab][curDur];
+  list.innerHTML = data.map(l => `
+    <div class="lesson-card" onclick="openModal()">
+      <div class="lc-icon" style="background:${l.col[1]}">${l.icon}</div>
+      <div class="lc-info">
+        <div class="lc-name">${l.name}</div>
+        <div class="lc-meta">${l.meta}</div>
+      </div>
+      <div class="lc-right">
+        <div class="lc-time" style="color:${l.col[0]}">${l.time}</div>
+        <div class="lc-badge" style="color:${l.col[0]};background:${l.col[1]};border:1px solid ${l.col[0]}30">${l.badge}</div>
+      </div>
+    </div>
+  `).join('');
+}
+renderLessons();
+
+function switchTab(btn, tab) {
+  curTab = tab;
+  document.querySelectorAll('.bp-tab').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderLessons();
+}
+function switchDur(btn, d) {
+  curDur = d;
+  document.querySelectorAll('.dur-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  renderLessons();
+}
+
+// ── FAQ ──
+function toggleFq(btn) {
+  const item = btn.closest('.fq');
+  const wasOn = item.classList.contains('on');
+  document.querySelectorAll('.fq').forEach(f=>f.classList.remove('on'));
+  if(!wasOn) item.classList.add('on');
+}
+
+// ── MODAL ──
+function openModal(plan='') {
+  document.getElementById('mOv').classList.add('on');
+  document.getElementById('mForm').style.display='block';
+  document.getElementById('mOk').style.display='none';
+  if(plan) {
+    const sel = document.getElementById('iPlan');
+    for(let o of sel.options) {
+      if(o.text.toLowerCase().includes(plan.toLowerCase().split('—')[0].trim())) {
+        sel.value = o.value; break;
+      }
+    }
+  }
+}
+function closeModal(){document.getElementById('mOv').classList.remove('on')}
+function closeIfOut(e){if(e.target===document.getElementById('mOv'))closeModal()}
+function submitForm(){
+  if(!document.getElementById('iName').value.trim()||!document.getElementById('iPhone').value.trim()){
+    alert('Vui lòng điền họ tên và số Zalo!');return;
+  }
+  document.getElementById('mForm').style.display='none';
+  document.getElementById('mOk').style.display='block';
+}
+
+// ── NAV scroll ──
+window.addEventListener('scroll',()=>{
+  document.querySelector('nav').style.background=
+    scrollY>40?'rgba(11,11,11,.98)':'rgba(11,11,11,.95)';
+});
+</script>
+</body>
+</html>
